@@ -1,1 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Ahmad</title>
 
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#fff5f7;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+    color:#e91e63;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    background:#e91e63;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#c2185b;
+}
+
+.gallery-item{
+    margin-top:20px;
+    border-top:1px solid #ddd;
+    padding-top:20px;
+}
+
+.gallery-item img{
+    width:100%;
+    border-radius:15px;
+    margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>🎂 Happy Birthday Ahmad 🎂</h1>
+
+<p class="subtitle">
+Long life with health, wealth and peace.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Guest Registration</h2>
+
+<input
+    type="text"
+    id="name"
+    placeholder="Your Name"
+>
+
+<textarea
+    id="wish"
+    placeholder="Write your birthday wishes..."
+></textarea>
+
+<input
+    type="file"
+    id="photo"
+    accept="image/*"
+>
+
+<button onclick="submitGuest()">
+Submit
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Birthday Guest Gallery</h2>
+
+<div id="gallery"></div>
+
+</div>
+
+</div>
+
+<script>
+
+loadGallery();
+
+function submitGuest(){
+
+    const name =
+        document.getElementById("name").value;
+
+    const wish =
+        document.getElementById("wish").value;
+
+    const photoInput =
+        document.getElementById("photo");
+
+    if(name.trim()===""){
+
+        alert("Please enter your name.");
+
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(){
+
+        saveGuest(reader.result);
+    };
+
+    if(photoInput.files.length>0){
+
+        reader.readAsDataURL(photoInput.files[0]);
+
+    }else{
+
+        saveGuest("");
+    }
+
+    function saveGuest(image){
+
+        let guests =
+            JSON.parse(
+                localStorage.getItem("birthdayGuests")
+            ) || [];
+
+        guests.unshift({
+
+            name:name,
+            wish:wish,
+            image:image,
+            date:new Date().toLocaleString()
+
+        });
+
+        localStorage.setItem(
+
+            "birthdayGuests",
+
+            JSON.stringify(guests)
+
+        );
+
+        document.getElementById("name").value="";
+        document.getElementById("wish").value="";
+        document.getElementById("photo").value="";
+
+        loadGallery();
+
+        alert(
+            "Thank you for celebrating Ahmad's birthday!"
+        );
+    }
+}
+
+function loadGallery(){
+
+    const gallery =
+        document.getElementById("gallery");
+
+    gallery.innerHTML="";
+
+    const guests =
+        JSON.parse(
+            localStorage.getItem("birthdayGuests")
+        ) || [];
+
+    guests.forEach(guest=>{
+
+        gallery.innerHTML += `
+
+        <div class="gallery-item">
+
+            <h3>${guest.name}</h3>
+
+            <p>${guest.wish}</p>
+
+            <small>${guest.date}</small>
+
+            ${
+                guest.image
+                ?
+                `<img src="${guest.image}">`
+                :
+                ""
+            }
+
+        </div>
+
+        `;
+    });
+}
+
+</script>
+
+</body>
+</html>
