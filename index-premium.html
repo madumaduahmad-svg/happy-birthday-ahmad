@@ -150,20 +150,20 @@ import {
   onValue
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBookcYSBkihpgzFLDlrgzHlVkVvY4UbSg",
-  authDomain: "bonappe-online-order.firebaseapp.com",
-  databaseURL: "https://bonappe-online-order-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "bonappe-online-order",
-  storageBucket: "bonappe-online-order.firebasestorage.app",
-  messagingSenderId: "555729028075",
-  appId: "1:555729028075:web:39cac776f80fdd727e0fae",
-  measurementId: "G-30WE6T926B"
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyByPa37bQbes2FHRQTnXYJVpTRueR11s",
+    authDomain: "happy-birthday-ahmad.firebaseapp.com",
+    databaseURL: "https://happy-birthday-ahmad-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "happy-birthday-ahmad",
+    storageBucket: "happy-birthday-ahmad.firebasestorage.app",
+    messagingSenderId: "506797756872",
+    appId: "1:506797756872:web:0d3683b5a9cb63f41eb0fd"
 };
+const app=
+initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-  const wishesRef = ref(db, "birthday-ahmad/wishes");
+const db= getDatabase(app);
+const wishesRef = ref(db, "wishes");
 
 document.getElementById("submitBtn")
 .addEventListener("click", async ()=>{
